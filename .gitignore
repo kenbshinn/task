@@ -1,0 +1,2 @@
+# ignore postgres config txt file
+postgres_tables.txt
