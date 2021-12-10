@@ -1,2 +1,5 @@
 # ignore postgres config txt file
 postgres_tables.txt
+
+#ignore Python Virtual ENV Directories
+env/
