@@ -16,10 +16,9 @@ conn = psycopg2.connect(
 #Creating a cursor object using the cursor() method
 cursor = conn.cursor()
 
-#Executing a MYSQL function using the execute() method
+#Executing a PostgreSQL function using the execute() method
 cursor.execute("SELECT task_name FROM tasks WHERE status_id = 1;")
 
-#cursor.fetchone()
-
+#Fetching ALL results that match query above. 
 data = cursor.fetchall()
 print("Here are a list of your active tasks: ",data)
