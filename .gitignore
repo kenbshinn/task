@@ -3,3 +3,6 @@ postgres_tables.txt
 
 #ignore Python Virtual ENV Directories
 env/
+
+#ignore kite installer
+kite-installer
