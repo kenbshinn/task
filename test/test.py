@@ -36,7 +36,11 @@ def print_menu():
         print (key, '--', menu_options[key] )
 
 def option1():
-     print('Handle option \'Option 1\'')
+    cursor = conn.cursor()
+    cursor.execute("SELECT task_name FROM tasks WHERE status_id = 1;")
+    data = cursor.fetchall()
+    print("Here are a list of your active tasks: ",data)
+     #print('Handle option \'Option 1\'')
 
 def option2():
      print('Handle option \'Option 2\'')
