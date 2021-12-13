@@ -29,6 +29,7 @@ menu_options = {
     2: 'Option 2',
     3: 'Option 3',
     4: 'Exit',
+    
 }
 
 def print_menu():
