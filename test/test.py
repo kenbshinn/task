@@ -8,9 +8,9 @@ DB_PASS = os.environ.get('DB_PASS')
 DB_PORT = os.environ.get('DB_PORT')
 
 #Establish Database Connnection
-conn = psycopg2.connect(
-    database=DATABASE, user=DB_USER, password=DB_PASS, host=DB_SERVER, port=DB_PORT
-)
+#conn = psycopg2.connect(
+#    database=DATABASE, user=DB_USER, password=DB_PASS, host=DB_SERVER, port=DB_PORT
+#)
 
 #Creating a cursor object using the cursor() method
 #cursor = conn.cursor()
@@ -23,7 +23,7 @@ conn = psycopg2.connect(
 #print("Here are a list of your active tasks: ",data)
 
 print("Welcome to Task. Your home for managing all your tasks in one place.")
-
+print('')
 menu_options = {
     1: 'Show all Active Tasks',
     2: 'Option 2',
@@ -37,11 +37,35 @@ def print_menu():
         print (key, '--', menu_options[key] )
 
 def option1():
-    cursor = conn.cursor()
-    cursor.execute("SELECT task_name FROM tasks WHERE status_id = 1;")
-    data = cursor.fetchall()
-    print("Here are a list of your active tasks: ",data)
+    # Commented out this section on 12/13 to try new code from test1.py. This should enable us to display results in vertial format
+    #cursor = conn.cursor()
+    #cursor.execute("SELECT task_name FROM tasks WHERE status_id = 1;")
+    #data = cursor.fetchall()
+    #print("Here are a list of your active tasks: ",data)
      #print('Handle option \'Option 1\'')
+
+    def get_tasks():
+     conn = None
+    try:
+        #params = config(database=DATABASE, user=DB_USER, password=DB_PASS, host=DB_SERVER, port=DB_PORT)
+        conn = psycopg2.connect(database=DATABASE, user=DB_USER, password=DB_PASS, host=DB_SERVER, port=DB_PORT)
+        cur = conn.cursor()
+        cur.execute("SELECT task_name FROM tasks ORDER BY task_id")
+        rows = cur.fetchall()
+        print("Your total number of tasks: ", cur.rowcount)
+        print('')
+        for row in rows:
+            print(row)
+        cur.close()
+        print('')
+    except (Exception, psycopg2.DatabaseError) as error:
+        print(error)
+        print('')
+    finally:
+        if conn is not None:
+            conn.close()
+    if __name__ == '__main__':
+        get_tasks()
 
 def option2():
      print('Handle option \'Option 2\'')
@@ -57,6 +81,7 @@ if __name__=='__main__':
             option = int(input('Enter your choice: '))
         except:
             print('Wrong input. Please enter a number ...')
+            print('')
         #Check what choice was entered and act accordingly
         if option == 1:
            option1()
@@ -66,6 +91,8 @@ if __name__=='__main__':
             option3()
         elif option == 4:
             print('Thanks message before exiting')
+            print('')
             exit()
         else:
             print('Invalid option. Please enter a number between 1 and 4.')
+print('')

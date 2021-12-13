@@ -20,7 +20,7 @@ def get_tasks():
         #params = config(database=DATABASE, user=DB_USER, password=DB_PASS, host=DB_SERVER, port=DB_PORT)
         conn = psycopg2.connect(database=DATABASE, user=DB_USER, password=DB_PASS, host=DB_SERVER, port=DB_PORT)
         cur = conn.cursor()
-        cur.execute("SELECT task_id, task_name FROM tasks ORDER BY task_id")
+        cur.execute("SELECT task_id FROM tasks ORDER BY task_id")
         rows = cur.fetchall()
         print("The number of tasks: ", cur.rowcount)
         for row in rows:
