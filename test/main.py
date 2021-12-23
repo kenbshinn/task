@@ -3,6 +3,13 @@ from flask_mysqldb import MySQL
 import MySQLdb.cursors
 import re
 import os
+from datetime import datetime
+
+
+#setting time as a universal constant
+now = datetime.now()
+id = 1
+formatted_date = now.strftime('%Y-%m-%d %H:%M:%S')
 
 SECRET_KEY = os.environ.get('SECRET_KEY')
 
@@ -43,6 +50,9 @@ def login():
             session['id'] = account['id']
             session['username'] = account['username']
             # Redirect to home page
+            #cursor.execute('INSERT INTO accounts(lastlogin) VALUES(%s)', [formatted_date] )
+            cursor.execute('UPDATE accounts SET lastlogin = %s WHERE username = %s', ( formatted_date,username,))
+            mysql.connection.commit()
             return redirect(url_for('home'))
         else:
             # Account doesnt exist or username/password incorrect
@@ -70,6 +80,8 @@ def register():
         username = request.form['username']
         password = request.form['password']
         email = request.form['email']
+        created = formatted_date
+
         # Check if account exists using MySQL
         cursor = mysql.connection.cursor(MySQLdb.cursors.DictCursor)
         cursor.execute('SELECT * FROM accounts WHERE username = %s', (username,))
@@ -85,7 +97,7 @@ def register():
             msg = 'Please fill out the form!'
         else:
             # Account doesnt exists and the form data is valid, now insert new account into accounts table
-            cursor.execute('INSERT INTO accounts VALUES (NULL, %s, MD5(%s), %s)', (username, password, email,))
+            cursor.execute('INSERT INTO accounts VALUES (NULL, NULL, NULL, %s, MD5(%s), %s, NULL, NULL, NULL, %s)', (username, password, email, created,))
             mysql.connection.commit()
             msg = 'You have successfully registered!'
     elif request.method == 'POST':
