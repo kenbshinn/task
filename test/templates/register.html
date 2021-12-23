@@ -14,6 +14,14 @@
 				<a href="{{ url_for('register') }}" class="active">Register</a>
 			</div>
 			<form action="{{ url_for('register') }}" method="post" autocomplete="off">
+				<label for="f_name">
+					<i class="fas fa-user"></i>
+				</label>
+				<input type="text" name="f_name" placeholder="First Name" id="f_name" required>
+				<label for="l_name">
+					<i class="fas fa-user"></i>
+				</label>
+				<input type="text" name="l_name" placeholder="Last Name" id="l_name" required>
 				<label for="username">
 					<i class="fas fa-user"></i>
 				</label>

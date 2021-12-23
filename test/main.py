@@ -1,4 +1,4 @@
-from flask import Flask, render_template, request, redirect, url_for, session
+from flask import Flask, render_template, request, redirect, url_for, session, flash, jsonify
 from flask_mysqldb import MySQL
 import MySQLdb.cursors
 import re
@@ -77,6 +77,8 @@ def register():
     # Check if "username", "password" and "email" POST requests exist (user submitted form)
     if request.method == 'POST' and 'username' in request.form and 'password' in request.form and 'email' in request.form:
         # Create variables for easy access
+        f_name = request.form['f_name']
+        l_name = request.form['l_name']
         username = request.form['username']
         password = request.form['password']
         email = request.form['email']
@@ -97,7 +99,7 @@ def register():
             msg = 'Please fill out the form!'
         else:
             # Account doesnt exists and the form data is valid, now insert new account into accounts table
-            cursor.execute('INSERT INTO accounts VALUES (NULL, NULL, NULL, %s, MD5(%s), %s, NULL, NULL, NULL, %s)', (username, password, email, created,))
+            cursor.execute('INSERT INTO accounts VALUES (NULL, %s, %s, %s, MD5(%s), %s, NULL, NULL, NULL, NULL, %s)', (f_name, l_name, username, password, email, created,))
             mysql.connection.commit()
             msg = 'You have successfully registered!'
     elif request.method == 'POST':
