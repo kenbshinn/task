@@ -1,0 +1,46 @@
+{% extends 'layout.html' %}
+
+{% block title %}Profile{% endblock %}
+
+{% block content %}
+<h2>Profile Page</h2>
+<body>
+    <div class="edit">
+        <h1>Update Profile</h1>
+        <form action="{{ url_for('edit_profile') }}" method="post" autocomplete="off">
+            <label for="f_name">
+                <i class="fas fa-user"></i>
+            </label>
+            <input type="text" name="f_name" value={{ account['f_name'] }} id="f_name" >
+    
+            <label for="l_name">
+                <i class="fas fa-user"></i>
+            </label>
+            <input type="text" name="l_name" value={{ account['l_name'] }} id="l_name" >
+            <label for="username">
+                <i class="fas fa-user"></i>
+            </label>
+            <input type="text" name="username" value={{ account['username'] }} id="username" >
+            <label for="password">
+                <i class="fas fa-lock"></i>
+            </label>
+            <input type="password" name="password" placeholder="Password" id="password" >
+            <label for="email">
+                <i class="fas fa-envelope"></i>
+            </label>
+            <input type="email" name="email" value={{ account['email'] }} id="email" >
+            <div class="msg">{{ msg }}</div>
+
+            <label for="description">
+                <i class="fas fa-envelope"></i>
+            </label>
+            <!<input type="text" name="description" value={{ account['description'] }} id="description">
+            <textarea id="description" name="description" rows="4" cols="50" value={{ account['description'] }}>{{ account['description'] }}</textarea>
+        </form>
+    </div>
+</body>
+
+<form action="edit_profile">
+    <input type="submit" value="Save Profile" />
+</form>
+{% endblock %}
